@@ -54,38 +54,27 @@
             background-color: #fff;
             min-height: 100vh;
             position: relative;
-            display: flex;
-            flex-direction: column;
         }
 
 
         /* 轮播图区域 */
         .carousel-section {
             position: relative;
-            height: 60vh;
+            height: 100vh;
             overflow: hidden;
             background: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .carousel-container {
             position: relative;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .carousel-wrapper {
             position: relative;
             width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .carousel-slide {
@@ -96,10 +85,6 @@
             height: 100%;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
-            background: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .carousel-slide.active {
@@ -107,11 +92,9 @@
         }
 
         .carousel-slide img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             object-position: center;
         }
 
@@ -140,43 +123,19 @@
         }
 
         /* 轮播图导航箭头 */
-        .carousel-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.3);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-
-        .carousel-nav:hover {
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .carousel-prev {
-            left: 15px;
-        }
-
-        .carousel-next {
-            right: 15px;
-        }
 
         /* 底部下载区域 */
         .bottom-download {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
             background: #fff;
             border-top: 1px solid #f0f0f0;
             padding: 20px 16px;
-            flex-shrink: 0;
+            z-index: 1000;
         }
 
         .download-card {
@@ -519,9 +478,6 @@
                     </div>
                 </div>
                 
-                <!-- 导航箭头 -->
-                <button class="carousel-nav carousel-prev" onclick="prevSlide()">‹</button>
-                <button class="carousel-nav carousel-next" onclick="nextSlide()">›</button>
                 
                 <!-- 轮播点 -->
                 <div class="carousel-dots">
@@ -637,10 +593,6 @@
             showSlide(currentSlide);
         }
 
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        }
 
         // 自动轮播
         setInterval(nextSlide, 3000);
