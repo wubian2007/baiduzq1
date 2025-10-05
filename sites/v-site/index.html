@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V站 - 足球，篮球赛事分析</title>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 返回主站导航 */
+        .back-to-main {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1002;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-to-main:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-main::before {
+            content: "← ";
+            margin-right: 4px;
+        }
+
+        .container {
+            max-width: 414px;
+            margin: 0 auto;
+            background-color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* 顶部应用信息区域 */
+        .app-header {
+            background: #fff;
+            padding: 20px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+        }
+
+        .app-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .app-details {
+            flex: 1;
+        }
+
+        .app-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .app-version {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .app-tags {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .app-tags span {
+            margin-right: 8px;
+        }
+
+        .download-btn-header {
+            background: #e6322e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(230, 50, 46, 0.3);
+            white-space: nowrap;
+        }
+
+        .download-btn-header:hover {
+            background: #c40704;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(230, 50, 46, 0.4);
+        }
+
+        .developer-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 12px;
+        }
+
+        /* 轮播图区域 */
+        .carousel-section {
+            position: relative;
+            height: 60vh;
+            overflow: hidden;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 100%;
+            padding: 20px 0;
+        }
+
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .swiper-slide-active {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .swiper-slide-next,
+        .swiper-slide-prev {
+            opacity: 0.7;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+
+
+        /* 轮播图加载动画 */
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* 底部下载区域 */
+        .bottom-download {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
+            background: #fff;
+            border-top: 1px solid #f0f0f0;
+            padding: 20px 16px;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .download-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-info {
+            flex: 1;
+        }
+
+        .download-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .download-slogan {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+
+        .download-meta {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .download-btn {
+            background: #e6322e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(230, 50, 46, 0.3);
+            white-space: nowrap;
+        }
+
+        .download-btn:hover {
+            background: #c40704;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(230, 50, 46, 0.4);
+        }
+
+        .download-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            color: #999;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .developer-info-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .version-info-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 公司信息区域 */
+        .company-info {
+            background: #fff;
+            padding: 20px 16px;
+            margin-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .company-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .guarantee-info {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .guarantee-links {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .guarantee-links a {
+            color: #e6322e;
+            text-decoration: none;
+        }
+
+        /* 弹窗样式 */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 320px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px 0;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-btn {
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-btn:hover {
+            color: #666;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .app-info-modal {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-app-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            margin-right: 15px;
+        }
+
+        .modal-app-details {
+            flex: 1;
+        }
+
+        .modal-app-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .modal-app-version {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .modal-developer {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .modal-tags {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .modal-tags span {
+            margin-right: 4px;
+        }
+
+        .modal-download-btn {
+            width: 100%;
+            background: #e6322e;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-download-btn:hover {
+            background: #c40704;
+        }
+
+        /* 二维码弹窗 */
+        .qr-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .qr-modal-overlay.show {
+            display: flex;
+        }
+
+        .qr-modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 300px;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        .qr-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 20px 0;
+        }
+
+        .qr-modal-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .qr-modal-body {
+            padding: 20px;
+        }
+
+        .qr-code {
+            margin-bottom: 15px;
+        }
+
+        .qr-code img {
+            width: 150px;
+            height: 150px;
+            border-radius: 8px;
+        }
+
+        .qr-tip {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 375px) {
+            .container {
+                max-width: 100%;
+            }
+            
+            .back-to-main {
+                top: 8px;
+                left: 8px;
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+            
+            .app-header {
+                padding: 16px 12px;
+            }
+            
+            .bottom-download {
+                padding: 16px 12px;
+            }
+            
+            .download-card {
+                gap: 12px;
+            }
+            
+            .download-icon {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .download-title {
+                font-size: 15px;
+            }
+            
+            .download-slogan {
+                font-size: 11px;
+            }
+            
+            .download-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+            
+            .download-footer {
+                flex-direction: column;
+                gap: 6px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 返回主站导航 -->
+    <a href="../../index.html" class="back-to-main">返回主站</a>
+
+    <div class="container">
+        <!-- 顶部应用信息区域 -->
+        <div class="app-header">
+            <div class="app-info">
+                <img src="images/app-icon.png" alt="V站图标" class="app-icon">
+                <div class="app-details">
+                    <div class="app-name">V站</div>
+                    <div class="app-version">V0.0.0</div>
+                    <div class="app-tags">
+                        <span>权限</span>
+                        <span>隐私</span>
+                        <span>功能</span>
+                    </div>
+                </div>
+                <button class="download-btn-header" onclick="showDownloadModal()">立即下载</button>
+            </div>
+            <div class="developer-info">
+                <span>开发者：开发者名称</span>
+                <span>2000/01/01更新</span>
+            </div>
+        </div>
+
+        <!-- 轮播图区域 -->
+        <div class="carousel-section">
+            <div class="swiper-container swiper-container-coverflow swiper-container-3d">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="images/screenshot1.png" alt="V站截图1">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/screenshot2.png" alt="V站截图2">
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="images/screenshot3.png" alt="V站截图3">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 公司信息区域 -->
+        <div class="company-info">
+            <div class="company-name">贵州优讯体育有限公司</div>
+            <div class="guarantee-info">
+                登录享网民权益保障，如遇欺诈等可<a href="#">申请保障</a>
+            </div>
+            <div class="guarantee-links">
+                <span>协助维权</span>
+                <span>虚假赔偿</span>
+                <span>欺诈赔偿</span>
+            </div>
+        </div>
+
+        <!-- 底部下载区域 -->
+        <div class="bottom-download">
+            <div class="download-card">
+                <img src="images/app-icon.png" alt="V站图标" class="download-icon">
+                <div class="download-info">
+                    <div class="download-title">V站</div>
+                    <div class="download-slogan">足球，篮球赛事分析</div>
+                    <div class="download-meta">大小:MB | 版本:</div>
+                </div>
+                <button class="download-btn" onclick="showDownloadModal()">立即下载</button>
+            </div>
+            <div class="download-footer">
+                <div class="developer-info-footer">
+                    <span>开发者名称</span>
+                    <span>权限</span>
+                    <span>隐私</span>
+                    <span>功能</span>
+                </div>
+                <div class="version-info-footer">
+                    <span>版本0.0.0；更新于2000/01/01</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下载弹窗 -->
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>下载应用</h3>
+                <span class="close-btn" onclick="closeDownloadModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="app-info-modal">
+                    <img src="images/app-icon.png" alt="V站图标" class="modal-app-icon">
+                    <div class="modal-app-details">
+                        <div class="modal-app-name">V站</div>
+                        <div class="modal-app-version">版本0.0.0；更新于2000/01/01</div>
+                        <div class="modal-developer">开发者名称</div>
+                        <div class="modal-tags">
+                            <span>权限</span>
+                            <span>隐私</span>
+                            <span>功能</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="modal-download-btn" onclick="downloadApp()">立即下载</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 二维码弹窗 -->
+    <div class="qr-modal-overlay" id="qrModal">
+        <div class="qr-modal-content">
+            <div class="qr-modal-header">
+                <h3>扫码下载</h3>
+                <span class="close-btn" onclick="closeQRModal()">&times;</span>
+            </div>
+            <div class="qr-modal-body">
+                <div class="qr-code">
+                    <img src="images/qr-code.png" alt="下载二维码">
+                </div>
+                <div class="qr-tip">
+                    请扫码下载安装包<br>
+                    请用手机扫描二维码后在手机浏览器中打开该页面后再下载应用安装包
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // 初始化Swiper
+        const swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 40
+                }
+            }
+        });
+
+        // 弹窗功能
+        function showDownloadModal() {
+            document.getElementById('downloadModal').classList.add('show');
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').classList.remove('show');
+        }
+
+        function showQRModal() {
+            document.getElementById('qrModal').classList.add('show');
+        }
+
+        function closeQRModal() {
+            document.getElementById('qrModal').classList.remove('show');
+        }
+
+        function downloadApp() {
+            // 检测设备类型
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            if (isMobile) {
+                showQRModal();
+            } else {
+                alert('无法下载：未添加安卓应用包');
+            }
+        }
+
+        // 点击弹窗外部关闭
+        document.getElementById('downloadModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeDownloadModal();
+            }
+        });
+
+        document.getElementById('qrModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeQRModal();
+            }
+        });
+
+        // 初始化
+        showSlide(0);
+    </script>
+</body>
+</html>
