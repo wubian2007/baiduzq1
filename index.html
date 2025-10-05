@@ -2,131 +2,247 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>DS足球</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多站点合集 - 专业应用下载平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .sites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .site-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .site-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .site-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .site-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .site-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .site-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .site-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .site-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .add-site-card {
+            background: rgba(255,255,255,0.1);
+            border: 2px dashed rgba(255,255,255,0.3);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-site-card:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .add-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 50px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .sites-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .site-card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- 应用信息头部 -->
-        <div class="app-header">
-            <div class="app-info">
-                <div class="app-name-section">
-                    <h1 class="app-name">DS足球</h1>
-                    <span class="app-version">V1.0.0</span>
-                </div>
-                <div class="app-tags">
-                    <span class="tag">权限</span>
-                    <span class="tag-divider">|</span>
-                    <span class="tag">隐私</span>
-                    <span class="tag-divider">|</span>
-                    <span class="tag">功能</span>
-                </div>
-                <button class="download-btn-header">立即下载</button>
-            </div>
-            <div class="developer-info">
-                <span class="developer">开发者：DS足球团队</span>
-                <span class="update-date">2025/01/01更新</span>
-            </div>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 多站点合集</h1>
+            <p>专业应用下载平台 - 一站式访问所有子站点</p>
         </div>
 
-        <!-- 应用图标 -->
-        <div class="app-icon-section">
-            <div class="app-logo-container">
-                <img src="images/app-icon.png" alt="DS足球图标" class="app-icon">
-                <div class="app-description">
-                    <h2 class="app-title">DS足球</h2>
-                    <p class="app-subtitle">专业足球数据分析</p>
+        <div class="sites-grid">
+            <!-- DS足球站点 -->
+            <div class="site-card">
+                <div class="site-icon">⚽</div>
+                <div class="site-title">DS足球</div>
+                <div class="site-description">
+                    专业足球数据分析平台<br>
+                    提供实时比赛数据、统计分析<br>
+                    和专业的足球资讯服务
                 </div>
+                <a href="sites/ds-football/" class="site-link">进入站点</a>
             </div>
-        </div>
 
-        <!-- 应用截图轮播 -->
-        <div class="screenshots-section">
-            <div class="carousel-container">
-                <div class="carousel-wrapper">
-                    <div class="carousel-slide active" data-index="0">
-                        <img src="images/screenshot1.png" alt="应用截图1">
-                    </div>
-                    <div class="carousel-slide" data-index="1">
-                        <img src="images/screenshot2.png" alt="应用截图2">
-                    </div>
-                    <div class="carousel-slide" data-index="2">
-                        <img src="images/screenshot3.png" alt="应用截图3">
-                    </div>
+            <!-- 占位符：球讯APP -->
+            <div class="site-card">
+                <div class="site-icon">📱</div>
+                <div class="site-title">球讯APP</div>
+                <div class="site-description">
+                    体育资讯应用<br>
+                    提供最新的体育新闻<br>
+                    和比赛信息
                 </div>
-                <div class="carousel-dots">
-                    <span class="dot active" data-index="0"></span>
-                    <span class="dot" data-index="1"></span>
-                    <span class="dot" data-index="2"></span>
+                <a href="sites/qiuxun-app/" class="site-link">进入站点</a>
+            </div>
+
+            <!-- 占位符：篮球世界 -->
+            <div class="site-card">
+                <div class="site-icon">🏀</div>
+                <div class="site-title">篮球世界</div>
+                <div class="site-description">
+                    专业篮球数据分析<br>
+                    NBA、CBA等联赛数据<br>
+                    和深度分析报告
+                </div>
+                <a href="sites/basketball-world/" class="site-link">进入站点</a>
+            </div>
+
+            <!-- 添加新站点按钮 -->
+            <div class="site-card add-site-card" onclick="showAddSiteModal()">
+                <div class="add-icon">➕</div>
+                <div class="site-title">添加新站点</div>
+                <div class="site-description">
+                    点击这里添加新的子站点<br>
+                    快速创建专业的应用下载页面
                 </div>
             </div>
         </div>
 
-        <!-- 下载区域 -->
-        <div class="download-section">
-            <div class="download-banner">
-                <img src="images/download-banner.png" alt="下载横幅" class="download-banner-img">
-                <div class="download-area" onclick="showDownloadDialog()"></div>
-            </div>
-        </div>
-
-        <!-- 底部信息 -->
-        <div class="bottom-section">
-            <img src="images/bottom-banner.png" alt="底部横幅" class="bottom-banner">
-        </div>
-
-        <!-- 底部固定下载按钮 -->
-        <div class="fixed-download-btn" onclick="showDownloadDialog()">
-            <span>立即下载</span>
-        </div>
-
-        <!-- 弹窗对话框 -->
-        <div class="modal-overlay" id="modalOverlay">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>温馨提示</h3>
-                    <span class="close-btn" onclick="closeModal()">&times;</span>
-                </div>
-                <div class="modal-body">
-                    <div class="app-info-modal">
-                        <img src="images/app-icon.png" alt="DS足球图标" class="modal-app-icon">
-                        <div class="modal-app-details">
-                            <div class="modal-app-name">DS足球</div>
-                            <div class="modal-app-version">版本1.0.0；更新于2025/01/01</div>
-                            <div class="modal-developer">DS足球团队</div>
-                            <div class="modal-tags">
-                                <span>隐私</span>
-                                <span>|</span>
-                                <span>权限</span>
-                            </div>
-                        </div>
-                    </div>
-                    <button class="modal-download-btn" onclick="downloadApp()">立即下载</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 二维码弹窗 -->
-        <div class="qr-modal-overlay" id="qrModalOverlay">
-            <div class="qr-modal-content">
-                <div class="qr-modal-header">
-                    <h3>请扫码下载安装包</h3>
-                    <span class="close-btn" onclick="closeQrModal()">&times;</span>
-                </div>
-                <div class="qr-modal-body">
-                    <div class="qr-code">
-                        <img src="images/qr-code.png" alt="二维码">
-                    </div>
-                    <p class="qr-tip">请用手机扫描二维码后在手机浏览器中打开该页面后再下载应用安装包</p>
-                </div>
-            </div>
+        <div class="footer">
+            <p>© 2025 多站点合集平台 | 专业应用下载解决方案</p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function showAddSiteModal() {
+            alert('添加新站点功能即将推出！\n\n您可以通过以下方式添加新站点：\n1. 在 sites/ 目录下创建新的子目录\n2. 复制现有站点模板\n3. 修改相应的配置信息\n4. 在主页面添加新的站点卡片');
+        }
+
+        // 添加一些动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.site-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
 </body>
 </html>

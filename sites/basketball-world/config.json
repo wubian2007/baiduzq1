@@ -1,0 +1,19 @@
+{
+  "siteName": "篮球世界",
+  "siteDescription": "专业篮球数据分析，NBA、CBA等联赛数据和深度分析报告",
+  "appName": "篮球世界",
+  "appVersion": "V1.0.0",
+  "developer": "篮球世界团队",
+  "updateDate": "2025/01/01更新",
+  "tags": ["篮球", "NBA", "数据分析"],
+  "icon": "images/app-icon.png",
+  "screenshots": [
+    "images/screenshot1.png",
+    "images/screenshot2.png", 
+    "images/screenshot3.png"
+  ],
+  "qrCode": "images/qr-code.png",
+  "downloadBanner": "images/download-banner.png",
+  "bottomBanner": "images/bottom-banner.png",
+  "backToMainUrl": "../../index.html"
+}

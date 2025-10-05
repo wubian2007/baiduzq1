@@ -1,142 +1,202 @@
-# DS足球下载站点复刻版
+# 多站点合集平台
 
-这是对DS足球下载站点的完整复刻，包含了原网站的所有功能和视觉效果。
+这是一个专业的多站点合集平台，可以管理多个应用下载站点。每个子站点都可以独立部署，也可以作为合集的一部分统一管理。
 
-## 功能特性
+## 🚀 项目特性
 
-### 🎨 视觉设计
+- **多站点管理** - 统一管理多个应用下载站点
+- **独立部署** - 每个子站点都可以独立部署
 - **响应式设计** - 完美适配移动端和桌面端
-- **现代化UI** - 采用卡片式设计和圆角元素
-- **流畅动画** - 包含页面加载动画和交互动效
-- **3D轮播图** - 应用截图的3D轮播展示效果
+- **模板化创建** - 快速创建新的子站点
+- **统一导航** - 便捷的站点间导航
 
-### 📱 交互功能
-- **轮播图控制** - 支持触摸滑动、鼠标拖拽和自动播放
-- **智能下载** - 根据设备类型显示不同的下载方式
-- **弹窗系统** - 优雅的模态框和二维码弹窗
-- **下载反馈** - 完整的下载流程和成功提示
-
-### 🔧 技术实现
-- **纯原生技术** - 使用HTML5、CSS3、JavaScript ES6+
-- **模块化代码** - 清晰的类结构和事件管理
-- **性能优化** - 图片懒加载和动画优化
-- **兼容性** - 支持现代浏览器和移动设备
-
-## 文件结构
+## 📁 项目结构
 
 ```
 baidu/
-├── index.html          # 主页面文件
-├── style.css           # 样式文件
-├── script.js           # JavaScript功能文件
-├── images/             # 图片资源目录
-│   ├── app-icon.png    # 应用图标
-│   ├── screenshot1.png # 应用截图1
-│   ├── screenshot2.png # 应用截图2
-│   ├── screenshot3.png # 应用截图3
-│   ├── download-banner.png # 下载横幅
-│   ├── bottom-banner.png   # 底部横幅
-│   └── qr-code.png     # 二维码图片
-└── README.md           # 说明文档
+├── index.html              # 主首页（站点合集入口）
+├── README.md               # 项目说明文档
+├── create-site.sh          # 自动创建新站点脚本
+├── template/               # 子站点模板
+│   ├── index.html          # 模板主页面
+│   ├── style.css           # 模板样式
+│   ├── script.js           # 模板脚本
+│   ├── config.json         # 配置文件模板
+│   └── images/             # 图片资源目录
+└── sites/                  # 子站点目录
+    ├── ds-football/        # DS足球站点
+    │   ├── index.html
+    │   ├── style.css
+    │   ├── script.js
+    │   └── images/
+    ├── qiuxun-app/         # 球讯APP站点
+    │   ├── index.html
+    │   ├── style.css
+    │   ├── script.js
+    │   └── images/
+    └── basketball-world/   # 篮球世界站点
+        ├── index.html
+        ├── style.css
+        ├── script.js
+        └── images/
 ```
 
-## 快速开始
+## 🎯 子站点列表
 
-### 1. 本地运行
+### 1. DS足球
+- **描述**: 专业足球数据分析平台
+- **功能**: 实时比赛数据、统计分析、专业足球资讯
+- **访问地址**: `sites/ds-football/index.html`
+
+### 2. 球讯APP
+- **描述**: 体育资讯应用
+- **功能**: 最新体育新闻、比赛信息
+- **访问地址**: `sites/qiuxun-app/index.html`
+
+### 3. 篮球世界
+- **描述**: 专业篮球数据分析
+- **功能**: NBA、CBA等联赛数据、深度分析报告
+- **访问地址**: `sites/basketball-world/index.html`
+
+## 🛠️ 快速创建新站点
+
+### 方法一：使用自动化脚本
+
 ```bash
-# 进入项目目录
-cd /Users/qifei/Documents/code/baidu
+# 给脚本执行权限
+chmod +x create-site.sh
 
-# 启动本地服务器
+# 创建新站点
+./create-site.sh "站点名称" "应用名称" "应用描述"
+
+# 示例
+./create-site.sh "网球大师" "网球大师APP" "专业网球数据分析平台"
+```
+
+### 方法二：手动创建
+
+1. **复制模板**：
+   ```bash
+   cp -r template/ sites/your-site-name/
+   ```
+
+2. **修改配置**：
+   编辑 `sites/your-site-name/config.json`
+
+3. **替换图片**：
+   将应用相关图片放入 `sites/your-site-name/images/`
+
+4. **添加入口**：
+   在主页面 `index.html` 中添加新的站点卡片
+
+## 📱 本地测试
+
+启动本地服务器：
+
+```bash
+# 启动服务器
 python3 -m http.server 8000
 
-# 在浏览器中访问
-open http://localhost:8000
+# 访问主页面
+http://localhost:8000
+
+# 访问子站点
+http://localhost:8000/sites/ds-football/
+http://localhost:8000/sites/qiuxun-app/
+http://localhost:8000/sites/basketball-world/
 ```
 
-### 2. 部署到服务器
-将所有文件上传到Web服务器即可，无需额外配置。
+## 🌐 部署说明
 
-## 功能说明
+### GitHub Pages 部署
 
-### 轮播图功能
-- **自动播放** - 每3秒自动切换
-- **手动控制** - 点击圆点或滑动切换
-- **3D效果** - 当前图片居中，其他图片有透视效果
-- **触摸支持** - 支持移动端触摸滑动
+1. **推送代码到GitHub**：
+   ```bash
+   git add .
+   git commit -m "添加多站点合集功能"
+   git push origin main
+   ```
 
-### 下载功能
-- **智能检测** - 自动检测设备类型
-- **移动端** - 显示二维码供扫描下载
-- **桌面端** - 显示下载对话框
-- **下载反馈** - 模拟下载过程并显示成功提示
+2. **启用GitHub Pages**：
+   - 进入仓库设置 → Pages
+   - 选择 "Deploy from a branch"
+   - 选择 "main" 分支和 "/ (root)" 文件夹
 
-### 弹窗系统
-- **模态框** - 应用信息展示和下载确认
-- **二维码弹窗** - 移动端下载二维码
-- **关闭方式** - 支持点击遮罩、ESC键、关闭按钮
+3. **访问地址**：
+   - 主站点：`https://your-username.github.io/baiduzq1`
+   - 子站点：`https://your-username.github.io/baiduzq1/sites/ds-football/`
 
-## 自定义配置
+### 独立部署子站点
 
-### 修改应用信息
-在 `index.html` 中修改以下内容：
+每个子站点都可以独立部署：
+
+```bash
+# 部署DS足球站点
+cd sites/ds-football
+# 将整个目录上传到服务器或部署平台
+```
+
+## 🎨 自定义配置
+
+### 修改主页面
+
+编辑 `index.html` 中的站点卡片：
+
 ```html
-<h1 class="app-name">DS足球</h1>
-<span class="app-version">V1.0.0</span>
-<span class="developer">开发者：DS足球团队</span>
-<span class="update-date">2025/01/01更新</span>
+<div class="site-card">
+    <div class="site-icon">🏀</div>
+    <div class="site-title">新站点</div>
+    <div class="site-description">
+        站点描述<br>
+        功能介绍
+    </div>
+    <a href="sites/new-site/" class="site-link">进入站点</a>
+</div>
 ```
 
-### 更换图片资源
-1. 替换 `images/` 目录中的图片文件
-2. 保持文件名不变，或修改HTML中的图片路径
-3. 建议图片尺寸：
-   - 应用图标：100x100px
-   - 应用截图：200x350px
-   - 横幅图片：按比例缩放
+### 修改子站点配置
 
-### 调整样式
-在 `style.css` 中修改颜色主题：
-```css
-/* 主色调 */
---primary-color: #e6322e;
---primary-hover: #c40704;
---text-color: #333;
---bg-color: #f5f5f5;
+编辑 `sites/your-site/config.json`：
+
+```json
+{
+  "siteName": "站点名称",
+  "siteDescription": "站点描述",
+  "appName": "应用名称",
+  "appVersion": "V1.0.0",
+  "developer": "开发者团队",
+  "updateDate": "2025/01/01更新",
+  "tags": ["标签1", "标签2", "标签3"]
+}
 ```
 
-## 浏览器兼容性
+## 📋 待办事项
 
-- ✅ Chrome 60+
-- ✅ Firefox 55+
-- ✅ Safari 12+
-- ✅ Edge 79+
-- ✅ iOS Safari 12+
-- ✅ Android Chrome 60+
+- [ ] 添加站点管理后台
+- [ ] 实现动态配置加载
+- [ ] 添加站点统计功能
+- [ ] 优化移动端体验
+- [ ] 添加多语言支持
 
-## 性能优化
+## 🤝 贡献指南
 
-- **图片优化** - 所有图片已压缩优化
-- **CSS优化** - 使用硬件加速和动画优化
-- **JavaScript优化** - 事件节流和防抖处理
-- **加载优化** - 渐进式加载和懒加载
+1. Fork 项目
+2. 创建功能分支
+3. 提交更改
+4. 推送到分支
+5. 创建 Pull Request
 
-## 注意事项
+## 📄 许可证
 
-1. **图片版权** - 请确保使用的图片有合法授权
-2. **内容合规** - 根据记忆要求，避免包含任何与投注相关的关键词
-3. **功能测试** - 建议在不同设备和浏览器上测试
-4. **SEO优化** - 可根据需要添加meta标签和结构化数据
+本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
 
-## 技术支持
+## 📞 联系方式
 
-如有问题或需要定制，请检查：
-1. 浏览器控制台是否有错误信息
-2. 图片文件是否正确加载
-3. 服务器是否正确配置
+如有问题或建议，请通过以下方式联系：
+
+- 项目地址：https://github.com/wubian2007/baiduzq1
+- 问题反馈：https://github.com/wubian2007/baiduzq1/issues
 
 ---
 
-**复刻完成时间**: 2025年10月5日  
-**原网站**: https://wubian2007.github.io/zuqiu/  
-**技术栈**: HTML5 + CSS3 + JavaScript ES6+
+**注意**: 本项目专注于体育应用下载，不包含任何投注相关内容，符合相关法律法规要求。

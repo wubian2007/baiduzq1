@@ -1,0 +1,19 @@
+{
+  "siteName": "新站点",
+  "siteDescription": "这是一个新的应用下载站点",
+  "appName": "新应用",
+  "appVersion": "V1.0.0",
+  "developer": "开发者团队",
+  "updateDate": "2025/01/01更新",
+  "tags": ["应用", "工具", "实用"],
+  "icon": "images/app-icon.png",
+  "screenshots": [
+    "images/screenshot1.png",
+    "images/screenshot2.png", 
+    "images/screenshot3.png"
+  ],
+  "qrCode": "images/qr-code.png",
+  "downloadBanner": "images/download-banner.png",
+  "bottomBanner": "images/bottom-banner.png",
+  "backToMainUrl": "../../index.html"
+}

@@ -1,0 +1,19 @@
+{
+  "siteName": "球讯APP",
+  "siteDescription": "体育资讯应用，提供最新的体育新闻和比赛信息",
+  "appName": "球讯APP",
+  "appVersion": "V1.0.0",
+  "developer": "球讯团队",
+  "updateDate": "2025/01/01更新",
+  "tags": ["体育", "资讯", "新闻"],
+  "icon": "images/app-icon.png",
+  "screenshots": [
+    "images/screenshot1.png",
+    "images/screenshot2.png", 
+    "images/screenshot3.png"
+  ],
+  "qrCode": "images/qr-code.png",
+  "downloadBanner": "images/download-banner.png",
+  "bottomBanner": "images/bottom-banner.png",
+  "backToMainUrl": "../../index.html"
+}
