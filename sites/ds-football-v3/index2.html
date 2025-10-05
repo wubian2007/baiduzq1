@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS足球 - 科技风格足球数据平台</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', 'Arial', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 动态背景网格 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 150, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 150, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid #00aaff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 0 30px rgba(0, 170, 255, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #00aaff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-link:hover {
+            color: #ffffff;
+            text-shadow: 0 0 10px #00aaff;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00aaff;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px #00aaff;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+            gap: 4px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        /* 主页横幅 */
+        .hero {
+            padding: 120px 2rem 4rem;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: #00aaff;
+            text-shadow: 0 0 20px #00aaff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .hero-highlight {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-highlight p {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            padding: 1.2rem 2.5rem;
+            border: 2px solid #00aaff;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 200px;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-ios {
+            background: transparent;
+            color: #00aaff;
+        }
+
+        .btn-android {
+            background: transparent;
+            color: #00aaff;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 170, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .download-btn:hover::before {
+            left: 100%;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 170, 255, 0.4);
+            background: rgba(0, 170, 255, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 2px solid #00aaff;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 170, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 170, 255, 0.3);
+            border-color: #ffffff;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #00aaff;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px #00aaff;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .phone-mockup {
+            width: 300px;
+            height: 600px;
+            background: linear-gradient(145deg, #000000, #1a1a1a);
+            border-radius: 40px;
+            padding: 20px;
+            margin: 0 auto;
+            border: 3px solid #00aaff;
+            box-shadow: 0 30px 60px rgba(0, 170, 255, 0.3);
+            position: relative;
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .app-screenshot {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 25px;
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid #00aaff;
+            box-shadow: 0 10px 30px rgba(0, 170, 255, 0.3);
+            animation: float 6s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+        }
+
+        .floating-card:nth-child(1) {
+            top: 10%;
+            right: -20px;
+            animation-delay: 0s;
+        }
+
+        .floating-card:nth-child(2) {
+            bottom: 20%;
+            left: -30px;
+            animation-delay: 2s;
+        }
+
+        .floating-card:nth-child(3) {
+            top: 50%;
+            right: -40px;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* 功能特色 */
+        .features {
+            padding: 6rem 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            color: #00aaff;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px #00aaff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            border: 2px solid #00aaff;
+            transition: all 0.3s ease;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 170, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 170, 255, 0.3);
+            border-color: #ffffff;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: transparent;
+            border: 3px solid #00aaff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2rem;
+            color: #00aaff;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            background: #00aaff;
+            color: #000;
+            box-shadow: 0 0 20px #00aaff;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00aaff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feature-card p {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* 用户评价 */
+        .reviews {
+            padding: 6rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            position: relative;
+        }
+
+        .reviews-carousel {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .reviews-container {
+            display: flex;
+            gap: 2rem;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+
+        .review-card {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2.5rem;
+            border-radius: 8px;
+            min-width: 350px;
+            border: 2px solid #00aaff;
+            box-shadow: 0 20px 40px rgba(0, 170, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .review-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 170, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .review-card:hover::before {
+            opacity: 1;
+        }
+
+        .review-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 170, 255, 0.4);
+            border-color: #ffffff;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            background: transparent;
+            border: 3px solid #00aaff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00aaff;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover .user-avatar {
+            background: #00aaff;
+            color: #000;
+            box-shadow: 0 0 20px #00aaff;
+        }
+
+        .user-info h4 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            color: #ffd700;
+        }
+
+        .review-text {
+            color: #666;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev {
+            left: -60px;
+        }
+
+        .next {
+            right: -60px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: #ffd700;
+            transform: scale(1.2);
+        }
+
+        /* 联系我们 */
+        .contact {
+            padding: 6rem 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .contact-info h3 {
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .contact-item i {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .contact-item h4 {
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 3rem;
+            border-radius: 8px;
+            border: 2px solid #00aaff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 170, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .contact-form:hover::before {
+            opacity: 1;
+        }
+
+        .contact-form h3 {
+            color: #ffd700;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 2px solid #00aaff;
+            border-radius: 8px;
+            color: #00aaff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 170, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 170, 255, 0.4);
+            background: rgba(0, 170, 255, 0.1);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: rgba(0, 0, 0, 0.95);
+            padding: 3rem 2rem 1rem;
+            color: white;
+            border-top: 2px solid #00aaff;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: #ffd700;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-section p,
+        .footer-section li {
+            margin-bottom: 0.8rem;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #ffd700;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            background: transparent;
+            border: 2px solid #00aaff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00aaff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: #00aaff;
+            color: #000;
+            box-shadow: 0 10px 20px rgba(0, 170, 255, 0.4);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0.7;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .phone-mockup {
+                width: 250px;
+                height: 500px;
+            }
+
+            .carousel-arrow {
+                display: none;
+            }
+
+            .reviews-container {
+                justify-content: center;
+            }
+
+            .review-card {
+                min-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 100px 1rem 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .features,
+            .reviews,
+            .contact {
+                padding: 3rem 1rem;
+            }
+
+            .phone-mockup {
+                width: 200px;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.png" alt="DS足球" class="logo-img">
+                <span>DS足球</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">首页</a></li>
+                <li><a href="#features" class="nav-link">功能特色</a></li>
+                <li><a href="#reviews" class="nav-link">用户评价</a></li>
+                <li><a href="#contact" class="nav-link">联系我们</a></li>
+            </ul>
+            
+            <button class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主页横幅 -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>DS足球</h1>
+                <p class="hero-subtitle">足球比分直播与数据分析平台，随时随地享受全球足球盛宴</p>
+                <div class="hero-highlight">
+                    <p>拥有全球207个国家或地区、2688个联赛、52824支球队的详细数据供您查询</p>
+                </div>
+                
+                <div class="download-buttons">
+                    <button class="download-btn btn-ios">
+                        <i class="fab fa-apple"></i>
+                        <span>iOS下载</span>
+                    </button>
+                    <button class="download-btn btn-android">
+                        <i class="fab fa-google-play"></i>
+                        <span>Android下载</span>
+                    </button>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">500万+</span>
+                        <span class="stat-label">用户下载</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">用户评分</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">好评率</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <img src="images/app1.png" alt="APP界面" class="app-screenshot">
+                    </div>
+                </div>
+                
+                <div class="floating-elements">
+                    <div class="floating-card">
+                        <i class="fas fa-star" style="color: #00aaff;"></i>
+                        <span style="margin-left: 0.5rem; color: #ffffff;">实时比分</span>
+                    </div>
+                    <div class="floating-card">
+                        <i class="fas fa-chart-line" style="color: #00aaff;"></i>
+                        <span style="margin-left: 0.5rem; color: #ffffff;">数据分析</span>
+                    </div>
+                    <div class="floating-card">
+                        <i class="fas fa-trophy" style="color: #00aaff;"></i>
+                        <span style="margin-left: 0.5rem; color: #ffffff;">赛事预测</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特色 -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">功能特色</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>实时比分</h3>
+                    <p>全球足球赛事实时比分直播，数据更新及时准确，让您不错过任何精彩瞬间</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>数据分析</h3>
+                    <p>专业的足球数据分析，帮助您深入了解比赛，做出明智的判断</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>比赛日程</h3>
+                    <p>完整的比赛日程安排，不错过任何精彩赛事，合理安排观赛时间</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <h3>足球资讯</h3>
+                    <p>最新的足球新闻资讯，掌握足坛动态，了解球员转会信息</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>视频集锦</h3>
+                    <p>精彩比赛视频集锦，重温经典瞬间，享受足球的视觉盛宴</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>专家分析</h3>
+                    <p>专业足球专家深度分析，提供专业见解，帮助您更好地理解比赛</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 用户评价 -->
+    <section id="reviews" class="reviews">
+        <div class="container">
+            <h2 class="section-title">用户评价</h2>
+            <div class="reviews-carousel">
+                <button class="carousel-arrow prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-arrow next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="reviews-container">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <h4>张先生</h4>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review-text">"界面设计很美观，用户体验很好，视频集锦很精彩，数据分析很专业，强烈推荐！"</p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <h4>李女士</h4>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review-text">"实时比分更新很快，数据很准确，界面简洁大方，是我用过最好的足球APP！"</p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="user-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="user-info">
+                                <h4>王先生</h4>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review-text">"功能非常全面，从实时比分到数据分析，再到视频集锦，一个APP满足所有需求！"</p>
+                    </div>
+                </div>
+                
+                <div class="carousel-dots">
+                    <div class="carousel-dot active"></div>
+                    <div class="carousel-dot"></div>
+                    <div class="carousel-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>联系方式</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>邮箱</h4>
+                            <p>dszuqiu@example.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-qq"></i>
+                        <div>
+                            <h4>QQ</h4>
+                            <p>123456789</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <h4>服务时间</h4>
+                            <p>周一至周日 9:00-18:00</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>在线咨询</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" placeholder="请输入您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <input type="email" id="email" placeholder="请输入您的邮箱" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">留言</label>
+                            <textarea id="message" rows="5" placeholder="请输入您的留言" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">发送留言</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于DS足球</h3>
+                <p>DS足球是专业的足球比分直播与数据分析平台，致力于为用户提供最全面、最准确的足球信息服务。</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-wechat"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#features">功能特色</a></li>
+                    <li><a href="#reviews">用户评价</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>服务支持</h3>
+                <ul>
+                    <li><a href="#">使用帮助</a></li>
+                    <li><a href="#">常见问题</a></li>
+                    <li><a href="#">意见反馈</a></li>
+                    <li><a href="#">隐私政策</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>下载地址</h3>
+                <p>扫描二维码或点击下载按钮，立即体验DS足球的精彩功能！</p>
+                <p>支持iOS和Android双平台</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 DS足球. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 汉堡菜单
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // 轮播图功能
+        const reviewsContainer = document.querySelector('.reviews-container');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        let currentIndex = 0;
+
+        function showReview(index) {
+            const offset = -index * (350 + 32); // 卡片宽度 + gap
+            reviewsContainer.style.transform = `translateX(${offset}px)`;
+            
+            // 更新圆点状态
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // 点击圆点切换
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                showReview(currentIndex);
+            });
+        });
+
+        // 上一张/下一张
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + 3) % 3;
+            showReview(currentIndex);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % 3;
+            showReview(currentIndex);
+        });
+
+        // 自动播放
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % 3;
+            showReview(currentIndex);
+        }, 5000);
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 下载按钮点击事件
+        document.querySelectorAll('.download-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const platform = this.classList.contains('btn-ios') ? 'iOS' : 'Android';
+                alert(`正在跳转到${platform}下载页面...`);
+                // 这里可以添加实际的下载链接
+            });
+        });
+
+        // 表单提交
+        document.querySelector('.contact-form form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('感谢您的留言，我们会尽快回复！');
+            this.reset();
+        });
+
+        // 数字动画
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(number => {
+                const target = number.textContent;
+                let current = 0;
+                const increment = parseInt(target.replace(/\D/g, '')) / 100;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= parseInt(target.replace(/\D/g, ''))) {
+                        current = parseInt(target.replace(/\D/g, ''));
+                        clearInterval(timer);
+                    }
+                    number.textContent = target.replace(/\d+/, Math.floor(current));
+                }, 20);
+            });
+        }
+
+        // 页面加载完成后执行动画
+        window.addEventListener('load', () => {
+            animateNumbers();
+        });
+    </script>
+</body>
+</html>

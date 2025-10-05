@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DS足球 - 足球比分直播与数据分析平台</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- 完全移除内联样式，避免与CSS文件冲突 -->
+</head>
+<body>
+    <!-- 导航栏 - 与测试页面完全一致 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="location.reload()" style="cursor: pointer;">
+                <img src="images/logo.png" alt="DS足球" class="logo-img">
+                <span class="logo-text">DS足球</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">首页</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#features" class="nav-link">功能特色</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">联系我们</a>
+                </li>
+            </ul>
+            
+            <button class="hamburger" id="hamburgerBtn">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主页横幅 -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <!-- 左侧：二维码 -->
+            <div class="hero-qr-section desktop-only">
+                <div class="qr-code-section">
+                    <div class="qr-code-container">
+                        <img src="images/qr-code.png" alt="下载二维码" class="qr-img" data-image-id="qrCode">
+                        <p>扫描二维码下载</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 中间：文字内容和下载按钮 -->
+            <div class="hero-content">
+                <h1 class="hero-title">DS足球</h1>
+                <p class="hero-subtitle">足球比分直播与数据分析平台，随时随地享受全球足球盛宴</p>
+                <div class="hero-highlight">
+                    <p>拥有全球207个国家或地区、2688个联赛、52824支球队的详细数据供您查询</p>
+                </div>
+                
+                <!-- 下载按钮 - 修复为并排显示 -->
+                <div class="hero-buttons">
+                    <button class="btn btn-primary download-btn">
+                        <i class="fab fa-apple"></i>
+                        <span>iOS下载</span>
+                    </button>
+                    <button class="btn btn-secondary download-btn">
+                        <i class="fab fa-google-play"></i>
+                        <span>Android下载</span>
+                    </button>
+                </div>
+                
+                <div class="download-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">500万+</span>
+                        <span class="stat-label">用户下载</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">用户评分</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">好评率</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 右侧：轮播图 -->
+            <div class="hero-image">
+                <div class="hero-carousel">
+                    <div class="hero-slide active">
+                        <img src="images/app1.png" alt="APP界面1" class="hero-img" data-image-id="screenshot1">
+                    </div>
+                    <div class="hero-slide">
+                        <img src="images/app2.png" alt="APP界面2" class="hero-img" data-image-id="screenshot2">
+                    </div>
+                    <div class="hero-slide">
+                        <img src="images/app3.png" alt="APP界面3" class="hero-img" data-image-id="screenshot3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能特色 -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">功能特色</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>实时比分</h3>
+                    <p>全球足球赛事实时比分直播，数据更新及时准确</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>数据分析</h3>
+                    <p>专业的足球数据分析，帮助您深入了解比赛</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>比赛日程</h3>
+                    <p>完整的比赛日程安排，不错过任何精彩赛事</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <h3>足球资讯</h3>
+                    <p>最新的足球新闻资讯，掌握足坛动态</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>视频集锦</h3>
+                    <p>精彩比赛视频集锦，重温经典瞬间</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>专家分析</h3>
+                    <p>专业足球专家深度分析，提供专业见解</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 用户评价轮播 -->
+    <section class="reviews">
+        <div class="container">
+            <h2 class="section-title">用户评价</h2>
+            <div class="reviews-carousel">
+                <button class="carousel-arrow prev" onclick="changeReview(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-arrow next" onclick="changeReview(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="reviews-container" id="reviewsContainer">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="images/app4.jpeg" alt="用户头像" class="review-avatar">
+                            <div class="review-info">
+                                <h4 class="review-name">张先生</h4>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review-text">"DS足球的数据非常准确，界面也很美观，是我用过最好的足球APP！"</p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="images/app4.jpeg" alt="用户头像" class="review-avatar">
+                            <div class="review-info">
+                                <h4 class="review-name">李女士</h4>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review-text">"实时比分更新很快，数据分析也很专业，推荐给所有足球爱好者！"</p>
+                    </div>
+                    
+                    <div class="review-card">
+                        <div class="review-header">
+                            <img src="images/app4.jpeg" alt="用户头像" class="review-avatar">
+                            <div class="review-info">
+                                <h4 class="review-name">王先生</h4>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="review-text">"功能很全面，从比分到数据都有，用户体验很棒！"</p>
+                    </div>
+                </div>
+                
+                <div class="carousel-dots">
+                    <span class="carousel-dot active" onclick="goToReview(0)"></span>
+                    <span class="carousel-dot" onclick="goToReview(1)"></span>
+                    <span class="carousel-dot" onclick="goToReview(2)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>联系方式</h3>
+                    <p><i class="fas fa-envelope"></i> 邮箱：contact@dszuqiu.com</p>
+                    <p><i class="fas fa-phone"></i> 电话：400-123-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 地址：北京市朝阳区科技园区</p>
+                </div>
+                <div class="contact-form">
+                    <h3>留言反馈</h3>
+                    <form>
+                        <input type="text" placeholder="您的姓名" required>
+                        <input type="email" placeholder="您的邮箱" required>
+                        <textarea placeholder="您的留言" rows="4" required></textarea>
+                        <button type="submit" class="btn btn-primary">发送留言</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 DS足球. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 全局菜单切换函数 - 确保在全局作用域
+        function toggleMenu() {
+            console.log('=== toggleMenu函数被调用 ===');
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            console.log('汉堡菜单元素:', hamburger);
+            console.log('导航菜单元素:', navMenu);
+            
+            if (hamburger && navMenu) {
+                console.log('切换前的状态:');
+                console.log('汉堡菜单active类:', hamburger.classList.contains('active'));
+                console.log('导航菜单active类:', navMenu.classList.contains('active'));
+                
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                
+                console.log('切换后的状态:');
+                console.log('汉堡菜单active类:', hamburger.classList.contains('active'));
+                console.log('导航菜单active类:', navMenu.classList.contains('active'));
+                
+                if (navMenu.classList.contains('active')) {
+                    console.log('✅ 菜单已打开');
+                    // 添加菜单项动画延迟
+                    const navItems = navMenu.querySelectorAll('.nav-item');
+                    navItems.forEach((item, index) => {
+                        item.style.transitionDelay = `${(index + 1) * 0.1}s`;
+                    });
+                } else {
+                    console.log('❌ 菜单已关闭');
+                    // 移除菜单项动画延迟
+                    const navItems = navMenu.querySelectorAll('.nav-item');
+                    navItems.forEach(item => {
+                        item.style.transitionDelay = '0s';
+                    });
+                }
+            } else {
+                console.error('❌ 菜单元素未找到');
+                if (!hamburger) console.error('汉堡菜单元素未找到');
+                if (!navMenu) console.error('导航菜单元素未找到');
+            }
+            
+            console.log('=== toggleMenu函数结束 ===\n');
+        }
+
+        // 用户评价轮播功能
+        let currentReview = 0;
+        const reviews = document.querySelectorAll('.review-card');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const container = document.getElementById('reviewsContainer');
+        
+        function showReview(index) {
+            if (index < 0) index = reviews.length - 1;
+            if (index >= reviews.length) index = 0;
+            
+            currentReview = index;
+            container.style.transform = `translateX(-${index * 100}%)`;
+            
+            // 更新圆点状态
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+        
+        function changeReview(direction) {
+            showReview(currentReview + direction);
+        }
+        
+        function goToReview(index) {
+            showReview(index);
+        }
+        
+        // 自动轮播
+        setInterval(() => {
+            changeReview(1);
+        }, 5000);
+        
+        // 设备检测和下载链接设置
+        function detectDevice() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                return 'iOS';
+            } else if (/android/i.test(userAgent)) {
+                return 'Android';
+            } else {
+                return 'Other';
+            }
+        }
+        
+        function setDownloadLinks() {
+            const iosBtn = document.querySelector('.btn-primary.download-btn');
+            const androidBtn = document.querySelector('.btn-secondary.download-btn');
+            const qrCodeBtn = document.querySelector('.btn-outline');
+
+            if (iosBtn) {
+                iosBtn.onclick = () => { window.location.href = 'https://apps.apple.com/app/dszuqiu'; };
+            }
+            if (androidBtn) {
+                androidBtn.onclick = () => { window.location.href = 'https://play.google.com/store/apps/details?id=com.dszuqiu.app'; };
+            }
+            if (qrCodeBtn) {
+                qrCodeBtn.onclick = () => { showQRCodeModal(); };
+            }
+        }
+        
+        // 数字动画
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            
+            numbers.forEach(number => {
+                const target = number.textContent;
+                const isPercentage = target.includes('%');
+                const isPlus = target.includes('+');
+                const isDecimal = target.includes('.');
+                
+                let numericValue = parseFloat(target.replace(/[^0-9.]/g, ''));
+                let current = 0;
+                const increment = numericValue / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= numericValue) {
+                        current = numericValue;
+                        clearInterval(timer);
+                    }
+                    
+                    let displayValue = current;
+                    if (isDecimal) {
+                        displayValue = current.toFixed(1);
+                    } else {
+                        displayValue = Math.floor(current);
+                    }
+                    
+                    if (isPercentage) {
+                        displayValue += '%';
+                    }
+                    if (isPlus) {
+                        displayValue += '+';
+                    }
+                    
+                    number.textContent = displayValue;
+                }, 30);
+            });
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== 页面加载完成 ===');
+            
+            setDownloadLinks();
+            animateNumbers();
+            
+            // 获取汉堡菜单元素
+            const hamburger = document.getElementById('hamburgerBtn');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            console.log('汉堡菜单元素:', hamburger);
+            console.log('导航菜单元素:', navMenu);
+            
+            if (hamburger && navMenu) {
+                // 添加点击事件监听器
+                hamburger.addEventListener('click', toggleMenu);
+                console.log('✅ 汉堡菜单事件监听器已添加');
+                
+                // 点击菜单项关闭菜单
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault(); // 阻止默认跳转
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        console.log('菜单项点击后已关闭');
+                        
+                        // 移除菜单项动画延迟
+                        const navItems = navMenu.querySelectorAll('.nav-item');
+                        navItems.forEach(item => {
+                            item.style.transitionDelay = '0s';
+                        });
+                    });
+                });
+                
+                // 点击页面其他地方关闭菜单
+                document.addEventListener('click', (e) => {
+                    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                        if (navMenu.classList.contains('active')) {
+                            hamburger.classList.remove('active');
+                            navMenu.classList.remove('active');
+                            console.log('点击页面其他地方，菜单已关闭');
+                            
+                            // 移除菜单项动画延迟
+                            const navItems = navMenu.querySelectorAll('.nav-item');
+                            navItems.forEach(item => {
+                                item.style.transitionDelay = '0s';
+                            });
+                        }
+                    }
+                });
+                
+                // 测试菜单状态
+                console.log('菜单初始状态:', {
+                    hamburgerClasses: hamburger.className,
+                    navMenuClasses: navMenu.className,
+                    navMenuStyle: getComputedStyle(navMenu)
+                });
+                
+            } else {
+                console.error('❌ 汉堡菜单元素未找到');
+            }
+            
+            console.log('=== 初始化完成 ===\n');
+        });
+        
+        // 备用初始化方法
+        window.addEventListener('load', function() {
+            console.log('页面完全加载完成');
+        });
+    </script>
+</body>
+</html>
