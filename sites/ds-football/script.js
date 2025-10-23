@@ -119,8 +119,8 @@ class Carousel {
 // 弹窗管理
 class ModalManager {
     constructor() {
-        this.modalOverlay = document.getElementById('modalOverlay');
-        this.qrModalOverlay = document.getElementById('qrModalOverlay');
+        this.modalOverlay = document.getElementById('downloadModal');
+        this.qrModalOverlay = document.getElementById('qrModal');
         this.init();
     }
 
@@ -176,6 +176,10 @@ class ModalManager {
 class DownloadManager {
     constructor() {
         this.modalManager = new ModalManager();
+        this.downloadUrls = {
+            ios: 'https://m.dszuqiu.com/test_download',
+            android: 'https://s.besget.com/download/dszq716.apk'
+        };
         this.init();
     }
 
@@ -188,8 +192,48 @@ class DownloadManager {
         const headerDownloadBtn = document.querySelector('.download-btn-header');
         if (headerDownloadBtn) {
             headerDownloadBtn.addEventListener('click', () => {
-                this.showDownloadDialog();
+                this.handleDownload();
             });
+        }
+
+        // 固定下载按钮
+        const fixedDownloadBtn = document.querySelector('.fixed-download-btn');
+        if (fixedDownloadBtn) {
+            fixedDownloadBtn.addEventListener('click', () => {
+                this.handleDownload();
+            });
+        }
+    }
+
+    // 检测设备类型
+    detectDevice() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        
+        if (/iphone|ipad|ipod/.test(userAgent)) {
+            return 'ios';
+        } else if (/android/.test(userAgent)) {
+            return 'android';
+        } else {
+            // 桌面端或其他设备，根据操作系统判断
+            if (/mac|macintosh/.test(userAgent)) {
+                return 'ios';
+            } else {
+                return 'android';
+            }
+        }
+    }
+
+    // 处理下载
+    handleDownload() {
+        const device = this.detectDevice();
+        const downloadUrl = this.downloadUrls[device];
+        
+        if (downloadUrl) {
+            // 直接跳转到下载页面
+            window.open(downloadUrl, '_blank');
+        } else {
+            // 如果无法识别设备，显示选择对话框
+            this.showDownloadDialog();
         }
     }
 
@@ -207,26 +251,35 @@ class DownloadManager {
     }
 
     downloadApp() {
-        // 模拟下载过程
-        const downloadBtn = document.querySelector('.modal-download-btn');
-        const originalText = downloadBtn.textContent;
+        // 检测设备并跳转到对应下载链接
+        const device = this.detectDevice();
+        const downloadUrl = this.downloadUrls[device];
         
-        downloadBtn.textContent = '下载中...';
-        downloadBtn.disabled = true;
-        
-        // 模拟下载延迟
-        setTimeout(() => {
-            downloadBtn.textContent = '下载完成';
+        if (downloadUrl) {
+            window.open(downloadUrl, '_blank');
+            this.modalManager.closeModal();
+        } else {
+            // 模拟下载过程
+            const downloadBtn = document.querySelector('.modal-download-btn');
+            const originalText = downloadBtn.textContent;
             
+            downloadBtn.textContent = '下载中...';
+            downloadBtn.disabled = true;
+            
+            // 模拟下载延迟
             setTimeout(() => {
-                downloadBtn.textContent = originalText;
-                downloadBtn.disabled = false;
-                this.modalManager.closeModal();
+                downloadBtn.textContent = '下载完成';
                 
-                // 显示下载成功提示
-                this.showDownloadSuccess();
-            }, 1000);
-        }, 2000);
+                setTimeout(() => {
+                    downloadBtn.textContent = originalText;
+                    downloadBtn.disabled = false;
+                    this.modalManager.closeModal();
+                    
+                    // 显示下载成功提示
+                    this.showDownloadSuccess();
+                }, 1000);
+            }, 2000);
+        }
     }
 
     showDownloadSuccess() {
@@ -292,17 +345,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // 全局函数（用于HTML中的onclick事件）
-function showDownloadDialog() {
+function showDownloadModal() {
     const downloadManager = new DownloadManager();
     downloadManager.showDownloadDialog();
 }
 
-function closeModal() {
+function showQRModal() {
+    const modalManager = new ModalManager();
+    modalManager.showQrModal();
+}
+
+function closeDownloadModal() {
     const modalManager = new ModalManager();
     modalManager.closeModal();
 }
 
-function closeQrModal() {
+function closeQRModal() {
     const modalManager = new ModalManager();
     modalManager.closeQrModal();
 }
